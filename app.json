@@ -13,22 +13,23 @@
       },
       "android": {
          "adaptiveIcon": {
-            "foregroundImage": "./assets/images/adaptive-icon.png",
+            "foregroundImage": "",
             "backgroundColor": "#ffffff"
          },
-         "edgeToEdgeEnabled": true
+         "edgeToEdgeEnabled": true,
+         "package": "com.sololiquy.bluearchivetools"
       },
       "web": {
          "bundler": "metro",
          "output": "static",
-         "favicon": "./assets/images/favicon.png"
+         "favicon": ""
       },
       "plugins": [
          "expo-router",
          [
             "expo-splash-screen",
             {
-               "image": "./assets/images/splash-icon.png",
+               "image": "./assets/Arona_pyrox.png",
                "imageWidth": 200,
                "resizeMode": "contain",
                "backgroundColor": "#ffffff"
@@ -37,6 +38,12 @@
       ],
       "experiments": {
          "typedRoutes": true
+      },
+      "extra": {
+         "router": {},
+         "eas": {
+            "projectId": "cd69c99e-879e-46c9-9b0e-508875c99778"
+         }
       }
    }
 }
