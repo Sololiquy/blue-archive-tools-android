@@ -1,40 +1,49 @@
+import Card from "@components/card/card_student_s";
 import { getStudents } from "api/studentsAPI";
-import Card from "components/card/simple_student_s";
 import React, { useEffect, useState } from "react";
 import { FlatList, Pressable, Text, TextInput, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Student() {
-   const [students, setStudents] = useState<any[]>([]);
-   const [filtered, setFiltered] = useState<any[]>([]);
+   const [defaultStudents, setDefaultStudents] = useState<any[]>([]);
+   const [student, setStudents] = useState<any[]>([]);
    const [loading, setLoading] = useState(true);
+
+   const [ascSort, setAscSort] = useState(true);
    const [searchValue, setSearchValue] = useState("");
 
    useEffect(() => {
       getStudents()
          .then((data) => {
-            const studentsArray = Object.values(data);
+            const studentsArray = Object.values(data).sort((a: any, b: any) => a.Name.localeCompare(b.Name));
+            setDefaultStudents(studentsArray);
             setStudents(studentsArray);
-            setFiltered(studentsArray);
          })
          .finally(() => setLoading(false));
    }, []);
 
    const search = () => {
-      const result = students.filter((s) => s.Name.toLowerCase().includes(searchValue.toLowerCase()));
-      setFiltered(result);
+      const result = defaultStudents.filter((s) => s.Name.toLowerCase().includes(searchValue.toLowerCase()));
+      setStudents(result);
    };
 
    const sortByName = () => {
-      const result = [...filtered].sort((a, b) => a.Name.localeCompare(b.Name));
-      setFiltered(result);
+      if (!student) return;
+      let sortedStudents;
+      if (ascSort) {
+         sortedStudents = [...student].sort((a, b) => b.Name.localeCompare(a.Name));
+         setAscSort(false);
+      } else {
+         sortedStudents = [...student].sort((a, b) => a.Name.localeCompare(b.Name));
+         setAscSort(true);
+      }
+      setStudents(sortedStudents);
    };
 
    if (loading) {
       return (
-         <SafeAreaView className="flex-1 justify-center items-center bg-black">
+         <View className="flex-1 justify-center items-center bg-black">
             <Text className="text-white text-lg font-bold">Loading...</Text>
-         </SafeAreaView>
+         </View>
       );
    }
 
@@ -56,14 +65,14 @@ export default function Student() {
             </Pressable>
          </View>
 
-         {/* Grid of Cards */}
          <FlatList
-            data={filtered}
+            data={student}
             keyExtractor={(item) => item.Id.toString()}
-            className="px-2 pt-20"
+            className="px-2"
             numColumns={4}
             renderItem={({ item }) => <Card id={item.Id} name={item.Name} school={item.School} />}
-            columnWrapperStyle={{ justifyContent: "space-between" }}
+            columnWrapperStyle={{ justifyContent: "space-between", gap: 4 }}
+            contentContainerStyle={{ gap: 4, paddingBottom: 4, paddingTop: 74 }}
          />
       </View>
    );

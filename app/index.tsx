@@ -1,7 +1,33 @@
 import { router } from "expo-router";
-import { Image, Pressable, Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, Image, Pressable, Text, View } from "react-native";
+
+import { getEnemies } from "api/enemiesAPI";
+import { getEquipments } from "api/equipmentsAPI";
+import { getLocalizations } from "api/localizationsAPI";
+import { getStudents } from "api/studentsAPI";
+import { getVoices } from "api/voicesAPI";
 
 export default function Index() {
+   const [loading, setLoading] = useState(true);
+
+   useEffect(() => {
+      Promise.all([getStudents(), getEquipments(), getVoices(), getEnemies(), getLocalizations()])
+         .then(() => {
+            console.log("✅ All API data cached");
+         })
+         .finally(() => setLoading(false));
+   }, []);
+
+   if (loading) {
+      return (
+         <View className="flex-1 allCenter bg-gray-900">
+            <ActivityIndicator size="large" color="#60A5FA" />
+            <Text className="text-white mt-4">Loading game data...</Text>
+         </View>
+      );
+   }
+
    return (
       <View className="flex-1 allCenter bg-gray-900">
          <View className="flex flex-col gap-4 items-center">
