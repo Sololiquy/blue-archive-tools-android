@@ -12,20 +12,23 @@ import StatComponent from "components/studentDetail/stat/main";
 import Tab from "components/studentDetail/tab";
 import VoiceComponent from "components/studentDetail/voice/main";
 
+import { contextStudentDetail } from "./useContextWrapper";
+
 export default function StudentDetail() {
    const { id } = useLocalSearchParams<{ id: string }>();
    const [student, setStudent] = useState<any | null>(null);
-   const [voice, setVoice] = useState<any | null>(null);
-   const [equipment, setEquipment] = useState([null, null, null]);
-
-   const [tabIndex, setTabIndex] = useState(1);
-   const [tierWeapon, setTierWeapon] = useState(0);
-   const [tierStudent, setTierStudent] = useState(1);
    const [level, setLevel] = useState(1);
-   const [levelWeapon, setLevelWeapon] = useState(1);
+   const [tierStudent, setTierStudent] = useState(1);
+   const [voice, setVoice] = useState<any | null>(null);
+
+   const [equipment, setEquipment] = useState([null, null, null]);
    const [levelEquipment, setLevelEquipment] = useState([1, 1, 1, 0]);
+
+   const [levelWeapon, setLevelWeapon] = useState(1);
+   const [tierWeapon, setTierWeapon] = useState(0);
    const [bondRank, setBondRank] = useState(1);
 
+   const [tabIndex, setTabIndex] = useState(1);
    const [loading, setLoading] = useState(true);
 
    // get API data --------------------------------
@@ -58,13 +61,31 @@ export default function StudentDetail() {
                equipmentsArray.find((eq: any) => eq.Category === category && eq.Tier === tier) || null;
 
             const newEquipments = student.Equipment.map((cat: string, index: number) => findEquipment(cat, levelEquipment[index]));
-            console.log(newEquipments);
             setEquipment(newEquipments);
          })
          .catch((err) => console.log(err));
    }, [student, levelEquipment]);
 
-   //-------------------------------------------------
+   // Functions-------------------------------------------------
+
+   const handleTabClick = (index: number) => {
+      setTabIndex(index);
+   };
+
+   const handleTierWeaponChange = (index: number) => {
+      if (index === tierWeapon) setTierWeapon(0);
+      else setTierWeapon(index);
+   };
+
+   const handleBondLevelChange = (value: number) => {
+      let x = value;
+      if (x < 1) {
+         x = 1;
+      } else if (x > 50) {
+         x = 50;
+      }
+      setBondRank(x);
+   };
 
    if (loading) {
       return (
@@ -81,10 +102,6 @@ export default function StudentDetail() {
          </View>
       );
    }
-
-   const handleTabClick = (index: number) => {
-      setTabIndex(index);
-   };
 
    const studentSpriteURL = `https://schaledb.com/images/student/portrait/${student.Id}.webp`;
    const backgroundURL = `https://schaledb.com/images/background/${student.CollectionBG}.jpg`;
@@ -109,18 +126,18 @@ export default function StudentDetail() {
                   <Tab onClick={() => handleTabClick(4)} active={tabIndex === 4} label="Voice" />
                </View>
 
+               {/* content */}
                <View className="w-full h-auto overflow-y-auto bg-[rgba(0,0,0,0.3)]">
-                  {tabIndex === 1 && <StatComponent />}
-                  {tabIndex === 2 && <SkillComponent />}
-                  {tabIndex === 3 && <ProfileComponent />}
-                  {tabIndex === 4 && <VoiceComponent />}
+                  <contextStudentDetail.Provider value={{ student, tierWeapon, levelWeapon, setLevelWeapon }}>
+                     {tabIndex === 1 && (
+                        <StatComponent handleTierWeaponChange={handleTierWeaponChange} handleBondLevelChange={handleBondLevelChange} />
+                     )}
+                     {tabIndex === 2 && <SkillComponent />}
+                     {tabIndex === 3 && <ProfileComponent />}
+                     {tabIndex === 4 && <VoiceComponent />}
+                  </contextStudentDetail.Provider>
                </View>
             </View>
-
-            <Text className="text-white text-2xl font-bold">
-               {student?.FamilyName} {student?.PersonalName}
-            </Text>
-            <Text className="text-white mt-2">ID: {id}</Text>
          </ScrollView>
       </ImageBackground>
    );

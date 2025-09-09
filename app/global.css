@@ -6,6 +6,10 @@
    @apply items-center justify-center;
 }
 
+.allTextCenter {
+   @apply align-middle text-center;
+}
+
 /* color picker */
 .strikerRoleColor {
    background-color: rgb(204, 26, 37) !important;

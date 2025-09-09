@@ -8,6 +8,7 @@
          "@api/*": ["api/*"],
          "@utils/*": ["utils/*"],
          "@components/*": ["components/*"],
+         "@assets/*": ["assets/*"],
          "@/*": ["./*"]
       }
    },
