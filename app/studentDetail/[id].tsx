@@ -110,7 +110,7 @@ export default function StudentDetail() {
       <ImageBackground source={{ uri: backgroundURL }} className="flex-1">
          <View className="absolute inset-0" style={{ backgroundColor: "rgba(0, 0, 0, 0.25)" }} />
 
-         <ScrollView contentContainerStyle={{ alignItems: "center", paddingTop: 40, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
+         <ScrollView contentContainerStyle={{ alignItems: "center", paddingTop: 40 }} showsVerticalScrollIndicator={false}>
             {/* sprite */}
             <View className="h-[84vh]">
                <Image source={{ uri: studentSpriteURL }} resizeMode="contain" className="h-full aspect-[1]" />
@@ -127,8 +127,8 @@ export default function StudentDetail() {
                </View>
 
                {/* content */}
-               <View className="w-full h-auto overflow-y-auto bg-[rgba(0,0,0,0.3)]">
-                  <contextStudentDetail.Provider value={{ student, tierWeapon, levelWeapon, setLevelWeapon }}>
+               <View className="w-full h-auto overflow-y-auto pb-16 bg-[rgba(0,0,0,0.3)]">
+                  <contextStudentDetail.Provider value={{ student, level, bondRank, equipment, tierWeapon, levelWeapon, setLevelWeapon }}>
                      {tabIndex === 1 && (
                         <StatComponent handleTierWeaponChange={handleTierWeaponChange} handleBondLevelChange={handleBondLevelChange} />
                      )}
