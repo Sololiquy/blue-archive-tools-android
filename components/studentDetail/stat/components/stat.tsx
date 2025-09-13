@@ -150,7 +150,6 @@ export default function Stat({ typeStat, nameStat, Level, levelWeapon }: paramet
          <Image className={`size-12`} src={statIconURL} alt="" />
          <Text className={`flex-grow overflow-hidden whitespace-nowrap text-ellipsis text-white`}>{nameStat}</Text>
          <Text className={`ml-5 mr-2 flex-shrink-0 text-white`}>{Math.round(value + equipmentBonus + weaponValue)}</Text>
-         {/* <Text className={`ml-5 mr-2 flex-shrink-0`}>{Math.round(value + weaponValue + equipmentTotalValue)}</Text> */}
       </View>
    );
 }

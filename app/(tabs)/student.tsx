@@ -1,7 +1,10 @@
-import Card from "@components/card/card_student_s";
-import { getStudents } from "api/studentsAPI";
+import { FlashList } from "@shopify/flash-list";
 import React, { useEffect, useState } from "react";
-import { FlatList, Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
+
+import { getStudents } from "api/studentsAPI";
+
+import Card from "@components/card/card_student_s";
 
 export default function Student() {
    const [defaultStudents, setDefaultStudents] = useState<any[]>([]);
@@ -65,7 +68,7 @@ export default function Student() {
             </Pressable>
          </View>
 
-         <FlatList
+         {/* <FlatList
             data={student}
             keyExtractor={(item) => item.Id.toString()}
             className="px-2"
@@ -73,6 +76,15 @@ export default function Student() {
             renderItem={({ item }) => <Card id={item.Id} name={item.Name} school={item.School} />}
             columnWrapperStyle={{ justifyContent: "space-between", gap: 4 }}
             contentContainerStyle={{ gap: 4, paddingBottom: 4, paddingTop: 74 }}
+         /> */}
+
+         <FlashList
+            data={student}
+            keyExtractor={(item) => item.Id.toString()}
+            numColumns={4}
+            renderItem={({ item }) => <Card id={item.Id} name={item.Name} school={item.School} />}
+            estimatedItemSize={120}
+            contentContainerStyle={{ paddingTop: 74, paddingBottom: 8 }}
          />
       </View>
    );

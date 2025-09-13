@@ -128,11 +128,26 @@ export default function StudentDetail() {
 
                {/* content */}
                <View className="w-full h-auto overflow-y-auto pb-16 bg-[rgba(0,0,0,0.3)]">
-                  <contextStudentDetail.Provider value={{ student, level, bondRank, equipment, tierWeapon, levelWeapon, setLevelWeapon }}>
+                  <contextStudentDetail.Provider
+                     value={{
+                        student,
+                        tierStudent,
+                        setTierStudent,
+                        level,
+                        setLevel,
+                        bondRank,
+                        equipment,
+                        tierWeapon,
+                        levelWeapon,
+                        setLevelWeapon,
+                        levelEquipment,
+                        setLevelEquipment,
+                     }}
+                  >
                      {tabIndex === 1 && (
                         <StatComponent handleTierWeaponChange={handleTierWeaponChange} handleBondLevelChange={handleBondLevelChange} />
                      )}
-                     {tabIndex === 2 && <SkillComponent />}
+                     {tabIndex === 2 && <SkillComponent handleTierWeaponChange={handleTierWeaponChange} />}
                      {tabIndex === 3 && <ProfileComponent />}
                      {tabIndex === 4 && <VoiceComponent />}
                   </contextStudentDetail.Provider>
