@@ -2,9 +2,9 @@ import Slider from "@react-native-community/slider";
 import React, { useContext } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
-import Equipment from "components/studentDetail/stat/components/equipment";
-import Stat from "components/studentDetail/stat/components/stat";
-import Terrain from "components/studentDetail/stat/components/terrain";
+import Equipment from "./components/equipment";
+import Stat from "./components/stat";
+import Terrain from "./components/terrain";
 
 import StarBlue from "assets/star-blue.svg";
 import StarEmpty from "assets/star-empty.svg";

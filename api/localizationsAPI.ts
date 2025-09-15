@@ -5,7 +5,7 @@ export async function getLocalizations() {
       return localizationCache;
    }
 
-   const response = await fetch("https://schaledb.com/data/en/students.min.json");
+   const response = await fetch("https://schaledb.com/data/en/localization.min.json");
    const data = await response.json();
    localizationCache = data;
    return data;

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, Image, ImageBackground, ScrollView, Text, View } from "react-native";
 
 import { getEquipments } from "api/equipmentsAPI";
+import { getLocalizations } from "api/localizationsAPI";
 import { getStudents } from "api/studentsAPI";
 import { getVoices } from "api/voicesAPI";
 
@@ -31,7 +32,15 @@ export default function StudentDetail() {
    const [tabIndex, setTabIndex] = useState(1);
    const [loading, setLoading] = useState(true);
 
+   const [localization, setLocalization] = useState([null]);
+
    // get API data --------------------------------
+
+   useEffect(() => {
+      getLocalizations()
+         .then((data) => setLocalization(data))
+         .catch((err) => console.log("Localization fetch failed", err));
+   }, []);
 
    useEffect(() => {
       getStudents()
@@ -67,11 +76,6 @@ export default function StudentDetail() {
    }, [student, levelEquipment]);
 
    // Functions-------------------------------------------------
-
-   const handleTabClick = (index: number) => {
-      setTabIndex(index);
-   };
-
    const handleTierWeaponChange = (index: number) => {
       if (index === tierWeapon) setTierWeapon(0);
       else setTierWeapon(index);
@@ -120,10 +124,10 @@ export default function StudentDetail() {
             <View className="w-screen flex flex-col">
                {/* tabs */}
                <View className="w-full relative allCenter gap-1 mr-1 flex flex-row justify-center items-end">
-                  <Tab onClick={() => handleTabClick(1)} active={tabIndex === 1} label="Stat" />
-                  <Tab onClick={() => handleTabClick(2)} active={tabIndex === 2} label="Skill" />
-                  <Tab onClick={() => handleTabClick(3)} active={tabIndex === 3} label="Profile" />
-                  <Tab onClick={() => handleTabClick(4)} active={tabIndex === 4} label="Voice" />
+                  <Tab onClick={() => setTabIndex(1)} active={tabIndex === 1} label="Stat" />
+                  <Tab onClick={() => setTabIndex(2)} active={tabIndex === 2} label="Skill" />
+                  <Tab onClick={() => setTabIndex(3)} active={tabIndex === 3} label="Profile" />
+                  <Tab onClick={() => setTabIndex(4)} active={tabIndex === 4} label="Voice" />
                </View>
 
                {/* content */}
@@ -142,6 +146,7 @@ export default function StudentDetail() {
                         setLevelWeapon,
                         levelEquipment,
                         setLevelEquipment,
+                        localization,
                      }}
                   >
                      {tabIndex === 1 && (

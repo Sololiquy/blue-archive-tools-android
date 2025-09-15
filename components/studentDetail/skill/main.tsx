@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import Star from "assets/star.svg";
+import Skill from "./components/skill";
 
 import { contextStudentDetail } from "app/studentDetail/useContextWrapper";
 
@@ -10,7 +11,7 @@ interface parameterType {
    handleTierWeaponChange: (index: number) => void;
 }
 
-export default function Skill({ handleTierWeaponChange }: parameterType) {
+export default function SkillDescription({ handleTierWeaponChange }: parameterType) {
    const { student, levelWeapon, setLevelWeapon, tierWeapon, levelEquipment } = useContext(contextStudentDetail);
    const [exSkillLevel, setExSkillLevel] = useState(1);
    const [skillLevel, setSkillLevel] = useState(1);
@@ -23,13 +24,6 @@ export default function Skill({ handleTierWeaponChange }: parameterType) {
       Main: ["strikerRoleColor", "STRIKER"],
       Support: ["specialRoleColor", "SUPPORT"],
    }[student?.SquadType as "Main" | "Support"] || ["defaultRoleColor", "DEFAULT"];
-
-   const handleExSkillLevelChange = (value: number) => {
-      setExSkillLevel(value);
-   };
-   const handleSkillLevelChange = (value: number) => {
-      setSkillLevel(value);
-   };
 
    return (
       <View className={`gap-1`}>
@@ -83,7 +77,40 @@ export default function Skill({ handleTierWeaponChange }: parameterType) {
             </View>
          </View>
 
-         <View></View>
+         <View className={`w-full bg-[rgba(0,0,0,0.3)]`}>
+            <Skill type="Ex" level={exSkillLevel} />
+            <View className={`flex-1 flex-row items-center gap-2`}>
+               <Slider
+                  style={{ flex: 1 }}
+                  minimumValue={1}
+                  maximumValue={5}
+                  step={1}
+                  value={exSkillLevel}
+                  onValueChange={setExSkillLevel}
+                  minimumTrackTintColor="#FFFFFF"
+                  maximumTrackTintColor="#FFFFFF"
+                  thumbTintColor="#FFFFFF"
+               />
+               <Text className={`w-10 font-bold italic tracking-wide text-white`}>Lv.{exSkillLevel}</Text>
+            </View>
+            <Skill type={basicSkill} level={skillLevel} />
+            <Skill type={passiveSkill} level={skillLevel} />
+            <Skill type="ExtraPassive" level={skillLevel} />
+            <View className={`flex-1 flex-row items-center gap-2`}>
+               <Slider
+                  style={{ flex: 1 }}
+                  minimumValue={1}
+                  maximumValue={10}
+                  step={1}
+                  value={skillLevel}
+                  onValueChange={setSkillLevel}
+                  minimumTrackTintColor="#FFFFFF"
+                  maximumTrackTintColor="#FFFFFF"
+                  thumbTintColor="#FFFFFF"
+               />
+               <Text className={`w-10 font-bold italic tracking-wide text-white`}>Lv.{exSkillLevel}</Text>
+            </View>
+         </View>
       </View>
    );
 }
