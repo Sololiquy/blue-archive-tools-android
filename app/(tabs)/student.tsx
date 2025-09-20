@@ -24,10 +24,18 @@ export default function Student() {
          .finally(() => setLoading(false));
    }, []);
 
-   const search = () => {
-      const result = defaultStudents.filter((s) => s.Name.toLowerCase().includes(searchValue.toLowerCase()));
-      setStudents(result);
-   };
+   useEffect(() => {
+      const delayDebounce = setTimeout(() => {
+         if (searchValue.trim() === "") {
+            setStudents(defaultStudents);
+         } else {
+            const result = defaultStudents.filter((s) => s.Name.toLowerCase().includes(searchValue.toLowerCase()));
+            setStudents(result);
+         }
+      }, 0);
+
+      return () => clearTimeout(delayDebounce);
+   }, [searchValue, defaultStudents]);
 
    const sortByName = () => {
       if (!student) return;
@@ -61,11 +69,18 @@ export default function Student() {
                placeholderTextColor="lightgray"
                value={searchValue}
                onChangeText={setSearchValue}
-               className="bg-white px-2 py-2 text-black flex-1"
+               className="bg-white px-2 py-2 text-black flex-1 rounded-r-full"
             />
-            <Pressable className="bg-blue-600 px-4 py-2 rounded-r-full" onPress={search}>
+            {/* <Pressable
+               className="bg-blue-600 px-4 py-2 rounded-r-full"
+               onPress={() => {
+                  // manual search button (instant)
+                  const result = defaultStudents.filter((s) => s.Name.toLowerCase().includes(searchValue.toLowerCase()));
+                  setStudents(result);
+               }}
+            >
                <Text className="text-white font-bold">Search</Text>
-            </Pressable>
+            </Pressable> */}
          </View>
 
          {/* <FlatList
@@ -84,7 +99,7 @@ export default function Student() {
             numColumns={4}
             renderItem={({ item }) => <Card id={item.Id} name={item.Name} school={item.School} />}
             estimatedItemSize={120}
-            contentContainerStyle={{ paddingTop: 74, paddingBottom: 8 }}
+            contentContainerStyle={{ paddingTop: 74, paddingBottom: 120 }}
          />
       </View>
    );

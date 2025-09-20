@@ -131,7 +131,7 @@ export default function StudentDetail() {
                </View>
 
                {/* content */}
-               <View className="w-full h-auto overflow-y-auto pb-16 bg-[rgba(0,0,0,0.3)]">
+               <View className="w-full pb-16 bg-[rgba(0,0,0,0.3)]">
                   <contextStudentDetail.Provider
                      value={{
                         student,
@@ -147,6 +147,7 @@ export default function StudentDetail() {
                         levelEquipment,
                         setLevelEquipment,
                         localization,
+                        voice,
                      }}
                   >
                      {tabIndex === 1 && (

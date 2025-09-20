@@ -1,15 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
+import CustomTabBar from "components/bottomNavbar";
 import { Tabs } from "expo-router";
 
 export default function TabsLayout() {
    return (
-      <Tabs
-         screenOptions={{
-            headerShown: false,
-            tabBarActiveTintColor: "#1E40AF",
-            tabBarInactiveTintColor: "#9CA3AF",
-         }}
-      >
+      <Tabs tabBar={(props) => <CustomTabBar {...props} />} screenOptions={{ headerShown: false }}>
          <Tabs.Screen
             name="student"
             options={{

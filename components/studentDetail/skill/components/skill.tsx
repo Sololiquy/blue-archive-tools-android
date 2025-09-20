@@ -1,8 +1,14 @@
 // TEMPORARY, NEED FIX LATER
 
-import { contextStudentDetail } from "app/studentDetail/useContextWrapper";
 import React, { JSX, useContext } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
+
+import BGExplosion from "assets/bg-Icon_explosive.svg";
+import BGMystic from "assets/bg-Icon_mystic.svg";
+import BGPierce from "assets/bg-Icon_piercing.svg";
+import BGSonic from "assets/bg-Icon_sonic.svg";
+
+import { contextStudentDetail } from "app/studentDetail/useContextWrapper";
 
 interface parameterType {
    type: string;
@@ -138,16 +144,15 @@ export default function Skill({ type, level }: parameterType) {
 
    return (
       <ScrollView>
-         {/* Main Skill */}
+         {/* Main */}
          <View className="flex flex-col">
             <View className="w-full h-24 flex flex-row items-center">
                <View className="relative w-24 h-24 items-center justify-center">
                   <Image source={{ uri: skillImgURL }} className="absolute w-20 h-20 z-40" resizeMode="contain" />
-                  <Image
-                     source={{ uri: `https://yourcdn.com/bg-Icon_${student?.BulletType}.png` }}
-                     className="absolute w-24 h-24"
-                     resizeMode="contain"
-                  />
+                  {student?.BulletType === "Explosion" && <BGExplosion />}
+                  {student?.BulletType === "Mystic" && <BGMystic />}
+                  {student?.BulletType === "Pierce" && <BGPierce />}
+                  {student?.BulletType === "Sonic" && <BGSonic />}
                </View>
 
                <View>
@@ -163,7 +168,7 @@ export default function Skill({ type, level }: parameterType) {
             <Text className="text-base px-2 text-justify flex-wrap text-white">{descriptionParts}</Text>
          </View>
 
-         {/* Extra Skills */}
+         {/* Extra */}
          {/* @ts-ignore */}
          {student?.Skills?.[type]?.ExtraSkills?.map((extra, i) => {
             const extraParts = parseDescription(extra?.Desc, extra?.Parameters, level, attackType, localization?.BuffName ?? {});
@@ -177,11 +182,10 @@ export default function Skill({ type, level }: parameterType) {
 
                      <View className="relative w-24 h-24 items-center justify-center">
                         <Image source={{ uri: extraSkillImgURL }} className="absolute w-20 h-20 z-40" resizeMode="contain" />
-                        <Image
-                           source={{ uri: `https://yourcdn.com/bg-Icon_${student?.BulletType}.png` }}
-                           className="absolute w-20 h-20"
-                           resizeMode="contain"
-                        />
+                        {student?.BulletType === "Explosion" && <BGExplosion />}
+                        {student?.BulletType === "Mystic" && <BGMystic />}
+                        {student?.BulletType === "Pierce" && <BGPierce />}
+                        {student?.BulletType === "Sonic" && <BGSonic />}
                      </View>
 
                      <View>

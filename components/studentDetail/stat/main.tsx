@@ -130,7 +130,7 @@ export default function StatDescription({ handleTierWeaponChange, handleBondLeve
             </View>
          </View>
 
-         <View className={`w-full px-1 flex-row flex-wrap bg-[rgba(0,0,0,0.3)]`}>
+         <View className={`w-full flex-row flex-wrap bg-[rgba(0,0,0,0.3)]`}>
             <View className={`w-1/2`}>
                <Stat typeStat="MaxHP" nameStat="Max HP" equipment={equipment} Level={level} levelWeapon={levelWeapon} />
             </View>
